@@ -21,5 +21,10 @@ namespace Proyectofinal9del26
         {
 
         }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
