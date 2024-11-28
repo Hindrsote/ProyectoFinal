@@ -77,7 +77,9 @@ namespace Proyecto_escuelas
 
         private void button4_Click_1(object sender, EventArgs e)
         {
-            Listados listado = 
+            Listado listado = new Listado();
+            listado.Show();
+            this.Hide();
         }
     }
 }

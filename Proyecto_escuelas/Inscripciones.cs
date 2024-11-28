@@ -40,6 +40,10 @@ namespace Proyecto_escuelas
                 LoadData("Materia", dataGridView3);
             }
         }
+        private void tabPage1_Click(object sender, EventArgs e)
+        {
+
+        }
         void LoadData(string tableName, DataGridView targetGridView)  // Método para cargar los datos en el DataGridView
         {
             try
@@ -61,14 +65,13 @@ namespace Proyecto_escuelas
                     }
                     else if (tableName == "Materia")
                     {
-                        query = "SELECT id_materia, nombre FROM Materia"; // Si hay una tabla de materias
+                        query = "SELECT id_materia, nombre, descripcion FROM Materia"; // Si hay una tabla de materias
                     }
                     else
                     {
                         // En caso de que no se pase una tabla válida
                         throw new ArgumentException("Tabla no válida.");
                     }
-
 
                     using (SqlCommand command = new SqlCommand(query, connection))
                     using (SqlDataAdapter adapter = new SqlDataAdapter(command))
@@ -89,10 +92,6 @@ namespace Proyecto_escuelas
                 MessageBox.Show("Error al cargar los datos: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-        private void tabPage1_Click(object sender, EventArgs e)
-        {
-
-        }
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -101,11 +100,13 @@ namespace Proyecto_escuelas
                 MessageBox.Show("El campo 'Nombre' no puede estar vacío.", "Error de Validación", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+
             if (textBox1.Text.Length > 100)
             {
                 MessageBox.Show("El campo 'Nombre' no puede exceder los 100 caracteres.", "Error de Validación", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+
             // Construir la consulta SQL
             string connectionString = "Server=DESKTOP-2MVFTUI;Database=tp_lab4;Trusted_Connection=True;"; // Reemplaza con tu cadena de conexión.
             string query = "INSERT INTO Materia (nombre) VALUES (@Nombre)";
@@ -131,7 +132,7 @@ namespace Proyecto_escuelas
                             MessageBox.Show("La materia ha sido añadida correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             // Opcional: recargar datos en DataGridView o limpiar los campos
                             textBox1.Clear();
-                            LoadData("Materia", dataGridView1); // Asegúrate de tener un método LoadData que recargue los datos en el DataGridView.
+                            LoadData("Materia", dataGridView3); // Asegúrate de tener un método LoadData que recargue los datos en el DataGridView.
                         }
                         else
                         {
