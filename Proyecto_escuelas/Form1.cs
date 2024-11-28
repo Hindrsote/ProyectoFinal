@@ -74,5 +74,10 @@ namespace Proyecto_escuelas
             incripcion.Show();
             this.Hide();
         }
+
+        private void button4_Click_1(object sender, EventArgs e)
+        {
+            Listados listado = 
+        }
     }
 }

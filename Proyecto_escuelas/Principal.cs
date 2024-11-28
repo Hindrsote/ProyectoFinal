@@ -25,7 +25,7 @@ namespace Proyecto_escuelas
             // Carga inicial de los datos con el DataGridView correspondiente
             LoadData("Alumnos", dataGridView1);
             LoadData("Profesores", dataGridView2);
-            LoadData("Materias", dataGridView3); // Si tienes la pestaña Materias
+            LoadData("Materia", dataGridView3); // Si tienes la pestaña Materias
         }
 
         // Evento que se ejecuta cuando se cambia de pestaña
@@ -41,7 +41,7 @@ namespace Proyecto_escuelas
             }
             else if (tabControl1.SelectedIndex == 2) // Tab Materias (si agregas esta funcionalidad)
             {
-                LoadData("Materias", dataGridView3);
+                LoadData("Materia", dataGridView3);
             }
         }
 
@@ -66,9 +66,9 @@ namespace Proyecto_escuelas
                     {
                         query = "SELECT id_profesor, nombre, dni, telefono, fecha_nac, id_materia FROM Profesores";
                     }
-                    else if (tableName == "Materias")
+                    else if (tableName == "Materia")
                     {
-                        query = "SELECT id_materia, nombre, descripcion FROM Materias"; // Si hay una tabla de materias
+                        query = "SELECT id_materia, nombre FROM Materia"; // Si hay una tabla de materias
                     }
                     else
                     {
@@ -241,7 +241,7 @@ namespace Proyecto_escuelas
                     }
                     else if (tabControl1.SelectedIndex == 2) // Tab Materias (si aplicable)
                     {
-                        LoadData("Materias", dataGridView3);
+                        LoadData("Materia", dataGridView3);
                     }
                 }
             }
@@ -343,7 +343,7 @@ namespace Proyecto_escuelas
                 }
                 else if (tabControl1.SelectedIndex == 2) // Tab Materias (si aplicable)
                 {
-                    LoadData("Materias", dataGridView3);
+                    LoadData("Materia", dataGridView3);
                 }
             }
             catch (Exception ex)
@@ -426,7 +426,7 @@ namespace Proyecto_escuelas
                 }
                 else if (tabControl1.SelectedIndex == 2) // Tab Materias (si aplicable)
                 {
-                    LoadData("Materias", dataGridView3);
+                    LoadData("Materia", dataGridView3);
                 }
             }
             catch (Exception ex)
