@@ -76,6 +76,7 @@ namespace Proyecto_escuelas
                         throw new ArgumentException("Tabla no válida.");
                     }
 
+
                     using (SqlCommand command = new SqlCommand(query, connection))
                     using (SqlDataAdapter adapter = new SqlDataAdapter(command))
                     {
