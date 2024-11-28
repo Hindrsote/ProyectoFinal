@@ -70,7 +70,9 @@ namespace Proyecto_escuelas
 
         private void button5_Click_1(object sender, EventArgs e)
         {
-
+            Inscripciones incripcion = new Inscripciones();
+            incripcion.Show();
+            this.Hide();
         }
     }
 }

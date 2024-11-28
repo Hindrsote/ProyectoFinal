@@ -59,7 +59,7 @@
             this.tabControl1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(704, 293);
+            this.tabControl1.Size = new System.Drawing.Size(1091, 291);
             this.tabControl1.TabIndex = 2;
             // 
             // tabPage1
@@ -69,9 +69,10 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 36);
             this.tabPage1.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Size = new System.Drawing.Size(696, 253);
+            this.tabPage1.Size = new System.Drawing.Size(1083, 251);
             this.tabPage1.TabIndex = 5;
             this.tabPage1.Text = "Alumnos";
+            this.tabPage1.Click += new System.EventHandler(this.tabPage1_Click);
             // 
             // dataGridView1
             // 
@@ -79,12 +80,12 @@
             this.dataGridView1.AllowUserToDeleteRows = false;
             this.dataGridView1.AllowUserToOrderColumns = true;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(-5, 0);
+            this.dataGridView1.Location = new System.Drawing.Point(0, 0);
             this.dataGridView1.Margin = new System.Windows.Forms.Padding(4);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowHeadersWidth = 49;
-            this.dataGridView1.Size = new System.Drawing.Size(691, 210);
+            this.dataGridView1.Size = new System.Drawing.Size(1083, 212);
             this.dataGridView1.TabIndex = 0;
             // 
             // tabPage2
@@ -141,45 +142,49 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(16, 343);
+            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.89565F);
+            this.button1.Location = new System.Drawing.Point(16, 320);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(169, 31);
+            this.button1.Size = new System.Drawing.Size(234, 55);
             this.button1.TabIndex = 3;
             this.button1.Text = "Añadir Nueva Materia";
-            this.button1.UseVisualStyleBackColor = true;
+            this.button1.UseVisualStyleBackColor = false;
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(206, 343);
+            this.textBox1.Location = new System.Drawing.Point(256, 335);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(178, 22);
             this.textBox1.TabIndex = 4;
             // 
             // button2
             // 
+            this.button2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
             this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.89565F);
-            this.button2.Location = new System.Drawing.Point(746, 60);
+            this.button2.ForeColor = System.Drawing.Color.Black;
+            this.button2.Location = new System.Drawing.Point(472, 320);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(279, 49);
+            this.button2.Size = new System.Drawing.Size(285, 55);
             this.button2.TabIndex = 5;
             this.button2.Text = "Inscribir";
-            this.button2.UseVisualStyleBackColor = true;
+            this.button2.UseVisualStyleBackColor = false;
             // 
             // listBox1
             // 
             this.listBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.89565F);
             this.listBox1.FormattingEnabled = true;
             this.listBox1.ItemHeight = 24;
-            this.listBox1.Location = new System.Drawing.Point(746, 115);
+            this.listBox1.Location = new System.Drawing.Point(763, 332);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(279, 28);
+            this.listBox1.Size = new System.Drawing.Size(330, 28);
             this.listBox1.TabIndex = 6;
             // 
             // Inscripciones
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1105, 387);
+            this.ClientSize = new System.Drawing.Size(1143, 415);
             this.Controls.Add(this.listBox1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.textBox1);

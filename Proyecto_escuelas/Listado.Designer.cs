@@ -58,7 +58,7 @@
             this.tabControl1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(704, 293);
+            this.tabControl1.Size = new System.Drawing.Size(1139, 338);
             this.tabControl1.TabIndex = 2;
             // 
             // tabPage1
@@ -69,7 +69,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 36);
             this.tabPage1.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Size = new System.Drawing.Size(696, 253);
+            this.tabPage1.Size = new System.Drawing.Size(1131, 298);
             this.tabPage1.TabIndex = 5;
             this.tabPage1.Text = "Alumnos";
             // 
@@ -84,7 +84,7 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowHeadersWidth = 49;
-            this.dataGridView1.Size = new System.Drawing.Size(691, 210);
+            this.dataGridView1.Size = new System.Drawing.Size(1131, 234);
             this.dataGridView1.TabIndex = 0;
             // 
             // tabPage2
@@ -143,12 +143,14 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(361, 12);
+            this.button1.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.89565F);
+            this.button1.Location = new System.Drawing.Point(543, 13);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(211, 23);
+            this.button1.Size = new System.Drawing.Size(227, 33);
             this.button1.TabIndex = 3;
             this.button1.Text = "Buscar";
-            this.button1.UseVisualStyleBackColor = true;
+            this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // label1
@@ -163,16 +165,16 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(91, 12);
+            this.textBox1.Location = new System.Drawing.Point(91, 13);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(253, 22);
+            this.textBox1.Size = new System.Drawing.Size(423, 22);
             this.textBox1.TabIndex = 5;
             // 
             // Listado
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1143, 415);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.button1);

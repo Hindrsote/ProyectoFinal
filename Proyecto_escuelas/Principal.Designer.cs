@@ -121,7 +121,7 @@
             this.Inicio.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.Inicio.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.77391F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Inicio.Location = new System.Drawing.Point(16, 342);
-            this.Inicio.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Inicio.Margin = new System.Windows.Forms.Padding(4);
             this.Inicio.Name = "Inicio";
             this.Inicio.Size = new System.Drawing.Size(190, 72);
             this.Inicio.TabIndex = 7;
@@ -132,7 +132,7 @@
             // textBox1
             // 
             this.textBox1.Location = new System.Drawing.Point(343, 324);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(4);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(424, 22);
             this.textBox1.TabIndex = 8;
@@ -141,7 +141,7 @@
             // textBox2
             // 
             this.textBox2.Location = new System.Drawing.Point(343, 367);
-            this.textBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textBox2.Margin = new System.Windows.Forms.Padding(4);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(424, 22);
             this.textBox2.TabIndex = 9;
@@ -149,7 +149,7 @@
             // textBox3
             // 
             this.textBox3.Location = new System.Drawing.Point(288, 419);
-            this.textBox3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textBox3.Margin = new System.Windows.Forms.Padding(4);
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(132, 22);
             this.textBox3.TabIndex = 10;
@@ -157,7 +157,7 @@
             // textBox4
             // 
             this.textBox4.Location = new System.Drawing.Point(624, 416);
-            this.textBox4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textBox4.Margin = new System.Windows.Forms.Padding(4);
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(143, 22);
             this.textBox4.TabIndex = 11;
@@ -168,7 +168,7 @@
             this.dateTimePicker1.CustomFormat = "dd-MM-yyyy";
             this.dateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dateTimePicker1.Location = new System.Drawing.Point(492, 487);
-            this.dateTimePicker1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dateTimePicker1.Margin = new System.Windows.Forms.Padding(4);
             this.dateTimePicker1.Name = "dateTimePicker1";
             this.dateTimePicker1.Size = new System.Drawing.Size(280, 22);
             this.dateTimePicker1.TabIndex = 16;
@@ -179,11 +179,11 @@
             // 
             this.tabPage3.Controls.Add(this.dataGridView3);
             this.tabPage3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.89565F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tabPage3.Location = new System.Drawing.Point(4, 28);
+            this.tabPage3.Location = new System.Drawing.Point(4, 36);
             this.tabPage3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tabPage3.Size = new System.Drawing.Size(696, 261);
+            this.tabPage3.Size = new System.Drawing.Size(696, 253);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Materias";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -195,7 +195,7 @@
             this.dataGridView3.AllowUserToOrderColumns = true;
             this.dataGridView3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView3.Location = new System.Drawing.Point(-1, 0);
-            this.dataGridView3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dataGridView3.Margin = new System.Windows.Forms.Padding(4);
             this.dataGridView3.Name = "dataGridView3";
             this.dataGridView3.ReadOnly = true;
             this.dataGridView3.RowHeadersWidth = 49;
@@ -206,11 +206,11 @@
             // 
             this.tabPage2.Controls.Add(this.dataGridView2);
             this.tabPage2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.89565F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tabPage2.Location = new System.Drawing.Point(4, 28);
+            this.tabPage2.Location = new System.Drawing.Point(4, 36);
             this.tabPage2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tabPage2.Size = new System.Drawing.Size(696, 261);
+            this.tabPage2.Size = new System.Drawing.Size(696, 253);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Profesores";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -222,7 +222,7 @@
             this.dataGridView2.AllowUserToOrderColumns = true;
             this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView2.Location = new System.Drawing.Point(-5, -12);
-            this.dataGridView2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dataGridView2.Margin = new System.Windows.Forms.Padding(4);
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.ReadOnly = true;
             this.dataGridView2.RowHeadersWidth = 49;
@@ -235,7 +235,7 @@
             this.tabPage1.Controls.Add(this.dataGridView1);
             this.tabPage1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.89565F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabPage1.Location = new System.Drawing.Point(4, 36);
-            this.tabPage1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage1.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Size = new System.Drawing.Size(696, 253);
             this.tabPage1.TabIndex = 5;
@@ -248,7 +248,7 @@
             this.dataGridView1.AllowUserToOrderColumns = true;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(4, 0);
-            this.dataGridView1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dataGridView1.Margin = new System.Windows.Forms.Padding(4);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowHeadersWidth = 49;
@@ -321,7 +321,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1093, 534);
+            this.ClientSize = new System.Drawing.Size(1143, 555);
             this.Controls.Add(this.dateTimePicker1);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
