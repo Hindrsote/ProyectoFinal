@@ -120,7 +120,7 @@
             // 
             this.Inicio.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.Inicio.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.77391F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Inicio.Location = new System.Drawing.Point(16, 342);
+            this.Inicio.Location = new System.Drawing.Point(12, 371);
             this.Inicio.Margin = new System.Windows.Forms.Padding(4);
             this.Inicio.Name = "Inicio";
             this.Inicio.Size = new System.Drawing.Size(190, 72);

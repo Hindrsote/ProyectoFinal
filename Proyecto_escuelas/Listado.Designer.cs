@@ -38,6 +38,7 @@
             this.button1 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
+            this.Inicio = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -147,7 +148,7 @@
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.89565F);
             this.button1.Location = new System.Drawing.Point(543, 13);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(227, 33);
+            this.button1.Size = new System.Drawing.Size(254, 44);
             this.button1.TabIndex = 3;
             this.button1.Text = "Buscar";
             this.button1.UseVisualStyleBackColor = false;
@@ -170,11 +171,25 @@
             this.textBox1.Size = new System.Drawing.Size(423, 22);
             this.textBox1.TabIndex = 5;
             // 
+            // Inicio
+            // 
+            this.Inicio.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.Inicio.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.77391F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Inicio.Location = new System.Drawing.Point(863, 13);
+            this.Inicio.Margin = new System.Windows.Forms.Padding(4);
+            this.Inicio.Name = "Inicio";
+            this.Inicio.Size = new System.Drawing.Size(247, 44);
+            this.Inicio.TabIndex = 8;
+            this.Inicio.Text = "Inicio";
+            this.Inicio.UseVisualStyleBackColor = false;
+            this.Inicio.Click += new System.EventHandler(this.Inicio_Click);
+            // 
             // Listado
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1143, 415);
+            this.Controls.Add(this.Inicio);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.button1);
@@ -205,5 +220,6 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Button Inicio;
     }
 }
