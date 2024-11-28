@@ -67,5 +67,12 @@ namespace Proyecto_escuelas
         {
             Application.Exit();
         }
+
+        private void button4_Click_1(object sender, EventArgs e)
+        {
+            Listado listadoForm = new Listado();
+            listadoForm.Show();
+            this.Hide();
+        }
     }
 }
