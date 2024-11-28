@@ -20,34 +20,25 @@ namespace Proyecto_escuelas
         public Principal()
         {
             InitializeComponent();
-            // Asigna el evento para el cambio de pestaña
             tabControl1.SelectedIndexChanged += TabControl1_SelectedIndexChanged;
-            // Carga inicial de los datos con el DataGridView correspondiente
+
             LoadData("Alumnos", dataGridView1);
             LoadData("Profesores", dataGridView2);
-            LoadData("Materia", dataGridView3); // Si tienes la pestaña Materias
         }
 
-        // Evento que se ejecuta cuando se cambia de pestaña
+
         private void TabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (tabControl1.SelectedIndex == 0) // Tab Alumnos
+            if (tabControl1.SelectedIndex == 0) 
             {
                 LoadData("Alumnos", dataGridView1);
             }
-            else if (tabControl1.SelectedIndex == 1) // Tab Profesores
+            else if (tabControl1.SelectedIndex == 1) 
             {
                 LoadData("Profesores", dataGridView2);
             }
-            else if (tabControl1.SelectedIndex == 2) // Tab Materias (si agregas esta funcionalidad)
-            {
-                LoadData("Materia", dataGridView3);
-            }
         }
-
-
-        
-        void LoadData(string tableName, DataGridView targetGridView)  // Método para cargar los datos en el DataGridView
+        void LoadData(string tableName, DataGridView targetGridView)  
         {
             try
             {
@@ -57,7 +48,6 @@ namespace Proyecto_escuelas
 
                     string query = "";
 
-                    // Usamos un bloque if-else para verificar la tabla y asignar la consulta adecuada
                     if (tableName == "Alumnos")
                     {
                         query = "SELECT id_alumno, nombre, apellido, dni, telefono, fecha_nac, id_materia FROM Alumnos";
@@ -68,11 +58,11 @@ namespace Proyecto_escuelas
                     }
                     else if (tableName == "Materia")
                     {
-                        query = "SELECT id_materia, nombre FROM Materia"; // Si hay una tabla de materias
+                        query = "SELECT id_materia, nombre FROM Materia"; 
                     }
                     else
                     {
-                        // En caso de que no se pase una tabla válida
+
                         throw new ArgumentException("Tabla no válida.");
                     }
 
@@ -83,10 +73,8 @@ namespace Proyecto_escuelas
                         DataTable dataTable = new DataTable();
                         adapter.Fill(dataTable);
 
-                        // Asignar los datos al DataGridView correspondiente
                         targetGridView.DataSource = dataTable;
 
-                        // Mostrar la cantidad de filas obtenidas (temporalmente)
                         MessageBox.Show($"Cargadas {dataTable.Rows.Count} filas de {tableName}.");
                     }
                 }
@@ -136,34 +124,33 @@ namespace Proyecto_escuelas
 
         private void button1_Click_2(object sender, EventArgs e) //AÑADIR o AGREGAR!!!!!!!!!!!!
         {
-            // Validaciones de entrada
-            if (!Regex.IsMatch(textBox1.Text, @"^[a-zA-Z]+$")) // Solo letras en "nombre"
+
+            if (!Regex.IsMatch(textBox1.Text, @"^[a-zA-Z]+$"))  
             {
                 MessageBox.Show("El campo 'Nombre' solo debe contener letras.", "Error de Validación", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            if (!Regex.IsMatch(textBox2.Text, @"^[a-zA-Z]+$")) // Solo letras en "apellido"
+            if (!Regex.IsMatch(textBox2.Text, @"^[a-zA-Z]+$")) 
             {
                 MessageBox.Show("El campo 'Apellido' solo debe contener letras.", "Error de Validación", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            if (!Regex.IsMatch(textBox3.Text, @"^\d+$")) // Solo números en "dni"
+            if (!Regex.IsMatch(textBox3.Text, @"^\d+$")) 
             {
                 MessageBox.Show("El campo 'DNI' solo debe contener números.", "Error de Validación", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            if (!Regex.IsMatch(textBox4.Text, @"^\d+$")) // Solo números en "telefono"
+            if (!Regex.IsMatch(textBox4.Text, @"^\d+$"))
             {
                 MessageBox.Show("El campo 'Teléfono' solo debe contener números.", "Error de Validación", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            // Extraer la fecha seleccionada
+
             DateTime fechaNac = dateTimePicker1.Value.Date;
 
-            // Validar que la fecha de nacimiento sea al menos de 5 años atrás
             DateTime fechaLimite = DateTime.Today.AddYears(-5);
             if (fechaNac > fechaLimite)
             {
@@ -171,21 +158,18 @@ namespace Proyecto_escuelas
                 return;
             }
 
-            // Define la cadena de conexión
             string connectionString = @"Server=localhost;Database=tp_lab4;Trusted_Connection=True;";
 
-            // Variables para almacenar la tabla y la consulta SQL
             string tableName = "";
             string query = "";
 
-            // Verifica qué pestaña está seleccionada
             if (tabControl1.SelectedTab == tabPage1)
             {
-                tableName = "Alumnos"; // Tabla para Alumnos
+                tableName = "Alumnos"; 
             }
             else if (tabControl1.SelectedTab == tabPage2)
             {
-                tableName = "Profesores"; // Tabla para Profesores
+                tableName = "Profesores"; 
             }
             else
             {
@@ -193,31 +177,23 @@ namespace Proyecto_escuelas
                 return;
             }
 
-            // Construir la consulta SQL
             query = $"INSERT INTO {tableName} (nombre, apellido, dni, telefono, fecha_nac) VALUES (@Nombre, @Apellido, @DNI, @Telefono, @FechaNac)";
 
             try
             {
-                // Crear conexión
+
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
-                    // Crear comando
+
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
-                        // Agregar parámetros
                         command.Parameters.AddWithValue("@Nombre", textBox1.Text);
                         command.Parameters.AddWithValue("@Apellido", textBox2.Text);
                         command.Parameters.AddWithValue("@DNI", textBox3.Text);
                         command.Parameters.AddWithValue("@Telefono", textBox4.Text);
                         command.Parameters.AddWithValue("@FechaNac", fechaNac);
-
-                        // Abrir conexión
                         connection.Open();
-
-                        // Ejecutar comando
                         int rowsAffected = command.ExecuteNonQuery();
-
-                        // Mostrar mensaje de éxito
                         if (rowsAffected > 0)
                         {
                             MessageBox.Show($"El registro ha sido añadido correctamente a la tabla {tableName}.",
@@ -230,18 +206,13 @@ namespace Proyecto_escuelas
                         }
                     }
 
-                    // Recargar los datos del DataGridView
-                    if (tabControl1.SelectedIndex == 0) // Tab Alumnos
+                    if (tabControl1.SelectedIndex == 0) 
                     {
                         LoadData("Alumnos", dataGridView1);
                     }
-                    else if (tabControl1.SelectedIndex == 1) // Tab Profesores
+                    else if (tabControl1.SelectedIndex == 1) 
                     {
                         LoadData("Profesores", dataGridView2);
-                    }
-                    else if (tabControl1.SelectedIndex == 2) // Tab Materias (si aplicable)
-                    {
-                        LoadData("Materia", dataGridView3);
                     }
                 }
             }
@@ -263,15 +234,13 @@ namespace Proyecto_escuelas
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-
-                    // Identificar la pestaña activa
                     string tableName, idColumn;
-                    if (tabControl1.SelectedIndex == 0) // Alumnos
+                    if (tabControl1.SelectedIndex == 0) 
                     {
                         tableName = "Alumnos";
                         idColumn = "id_alumno";
                     }
-                    else if (tabControl1.SelectedIndex == 1) // Profesores
+                    else if (tabControl1.SelectedIndex == 1) 
                     {
                         tableName = "Profesores";
                         idColumn = "id_profesor";
@@ -282,7 +251,6 @@ namespace Proyecto_escuelas
                         return;
                     }
 
-                    // Verificar si hay una fila seleccionada
                     int selectedRowIndex = tabControl1.SelectedIndex == 0
                         ? dataGridView1.CurrentCell.RowIndex
                         : dataGridView2.CurrentCell.RowIndex;
@@ -293,11 +261,9 @@ namespace Proyecto_escuelas
                         return;
                     }
 
-                    // Obtener el ID de la fila seleccionada
                     var dataGridView = tabControl1.SelectedIndex == 0 ? dataGridView1 : dataGridView2;
                     int id = Convert.ToInt32(dataGridView.Rows[selectedRowIndex].Cells[0].Value);
 
-                    // Comando de actualización
                     string query = $@"
                 UPDATE {tableName}
                 SET nombre = @nombre,
@@ -307,10 +273,8 @@ namespace Proyecto_escuelas
                     fecha_nac = @fecha_nac
                 WHERE {idColumn} = @id";
 
-                    // Extraer la fecha seleccionada
                     DateTime fechaNac = dateTimePicker1.Value.Date;
 
-                    // Validar que la fecha de nacimiento sea al menos de 5 años atrás
                     DateTime fechaLimite = DateTime.Today.AddYears(-5);
                     if (fechaNac > fechaLimite)
                     {
@@ -333,17 +297,13 @@ namespace Proyecto_escuelas
                     }
                 }
 
-                if (tabControl1.SelectedIndex == 0) // Tab Alumnos
+                if (tabControl1.SelectedIndex == 0) 
                 {
                     LoadData("Alumnos", dataGridView1);
                 }
-                else if (tabControl1.SelectedIndex == 1) // Tab Profesores
+                else if (tabControl1.SelectedIndex == 1) 
                 {
                     LoadData("Profesores", dataGridView2);
-                }
-                else if (tabControl1.SelectedIndex == 2) // Tab Materias (si aplicable)
-                {
-                    LoadData("Materia", dataGridView3);
                 }
             }
             catch (Exception ex)
@@ -360,14 +320,13 @@ namespace Proyecto_escuelas
                 {
                     connection.Open();
 
-                    // Identificar la pestaña activa
                     string tableName, idColumn;
-                    if (tabControl1.SelectedIndex == 0) // Alumnos
+                    if (tabControl1.SelectedIndex == 0)
                     {
                         tableName = "Alumnos";
                         idColumn = "id_alumno";
                     }
-                    else if (tabControl1.SelectedIndex == 1) // Profesores
+                    else if (tabControl1.SelectedIndex == 1) 
                     {
                         tableName = "Profesores";
                         idColumn = "id_profesor";
@@ -378,7 +337,6 @@ namespace Proyecto_escuelas
                         return;
                     }
 
-                    // Verificar si hay una fila seleccionada
                     int selectedRowIndex = tabControl1.SelectedIndex == 0
                         ? dataGridView1.CurrentCell.RowIndex
                         : dataGridView2.CurrentCell.RowIndex;
@@ -389,11 +347,8 @@ namespace Proyecto_escuelas
                         return;
                     }
 
-                    // Obtener el ID de la fila seleccionada
                     var dataGridView = tabControl1.SelectedIndex == 0 ? dataGridView1 : dataGridView2;
                     int id = Convert.ToInt32(dataGridView.Rows[selectedRowIndex].Cells[0].Value);
-
-                    // Confirmar eliminación
                     var confirmResult = MessageBox.Show(
                         "¿Estás seguro que deseas eliminar este registro?",
                         "Confirmar eliminación",
@@ -401,8 +356,6 @@ namespace Proyecto_escuelas
 
                     if (confirmResult != DialogResult.Yes)
                         return;
-
-                    // Comando de eliminación
                     string query = $@"DELETE FROM {tableName} WHERE {idColumn} = @id";
 
                     using (SqlCommand command = new SqlCommand(query, connection))
@@ -416,17 +369,13 @@ namespace Proyecto_escuelas
                     }
                 }
 
-                if (tabControl1.SelectedIndex == 0) // Tab Alumnos
+                if (tabControl1.SelectedIndex == 0) 
                 {
                     LoadData("Alumnos", dataGridView1);
                 }
-                else if (tabControl1.SelectedIndex == 1) // Tab Profesores
+                else if (tabControl1.SelectedIndex == 1) 
                 {
                     LoadData("Profesores", dataGridView2);
-                }
-                else if (tabControl1.SelectedIndex == 2) // Tab Materias (si aplicable)
-                {
-                    LoadData("Materia", dataGridView3);
                 }
             }
             catch (Exception ex)

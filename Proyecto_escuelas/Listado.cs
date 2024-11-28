@@ -17,26 +17,24 @@ namespace Proyecto_escuelas
         public Listado()
         {
             InitializeComponent();
-            // Asigna el evento para el cambio de pestaña
             tabControl1.SelectedIndexChanged += TabControl1_SelectedIndexChanged;
-            // Carga inicial de los datos con el DataGridView correspondiente
             LoadData("Alumnos", dataGridView1);
             LoadData("Profesores", dataGridView2);
-            LoadData("Materia", dataGridView3); // Si tienes la pestaña Materias
+            LoadData("Materia", dataGridView3); 
         }
 
-        // Evento que se ejecuta cuando se cambia de pestaña
+
         private void TabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (tabControl1.SelectedIndex == 0) // Tab Alumnos
+            if (tabControl1.SelectedIndex == 0) 
             {
                 LoadData("Alumnos", dataGridView1);
             }
-            else if (tabControl1.SelectedIndex == 1) // Tab Profesores
+            else if (tabControl1.SelectedIndex == 1) 
             {
                 LoadData("Profesores", dataGridView2);
             }
-            else if (tabControl1.SelectedIndex == 2) // Tab Materias (si agregas esta funcionalidad)
+            else if (tabControl1.SelectedIndex == 2) 
             {
                 LoadData("Materia", dataGridView3);
             }
@@ -44,7 +42,7 @@ namespace Proyecto_escuelas
 
 
 
-        void LoadData(string tableName, DataGridView targetGridView)  // Método para cargar los datos en el DataGridView
+        void LoadData(string tableName, DataGridView targetGridView)
         {
             try
             {
@@ -54,7 +52,6 @@ namespace Proyecto_escuelas
 
                     string query = "";
 
-                    // Usamos un bloque if-else para verificar la tabla y asignar la consulta adecuada
                     if (tableName == "Alumnos")
                     {
                         query = "SELECT id_alumno, nombre, apellido, dni, telefono, fecha_nac, id_materia FROM Alumnos";
@@ -65,11 +62,10 @@ namespace Proyecto_escuelas
                     }
                     else if (tableName == "Materia")
                     {
-                        query = "SELECT id_materia, nombre, descripcion FROM Materia"; // Si hay una tabla de materias
+                        query = "SELECT id_materia, nombre, descripcion FROM Materia"; 
                     }
                     else
                     {
-                        // En caso de que no se pase una tabla válida
                         throw new ArgumentException("Tabla no válida.");
                     }
 
@@ -79,10 +75,8 @@ namespace Proyecto_escuelas
                         DataTable dataTable = new DataTable();
                         adapter.Fill(dataTable);
 
-                        // Asignar los datos al DataGridView correspondiente
                         targetGridView.DataSource = dataTable;
 
-                        // Mostrar la cantidad de filas obtenidas (temporalmente)
                         MessageBox.Show($"Cargadas {dataTable.Rows.Count} filas de {tableName}.");
                     }
                 }
@@ -93,7 +87,7 @@ namespace Proyecto_escuelas
             }
         }
 
-        private void button1_Click(object sender, EventArgs e) //LISTAR 
+        private void button1_Click(object sender, EventArgs e)                                                 //LISTAR 
         {
             if (tabControl1.SelectedIndex == 0)
             {
@@ -109,7 +103,6 @@ namespace Proyecto_escuelas
             }
         }
 
-        // Método para cargar los datos dependiendo del procedimiento y DataGridView correspondiente
         private void LoadData(string tableName, DataGridView targetGridView, string procedureName)
         {
             try
@@ -117,22 +110,14 @@ namespace Proyecto_escuelas
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-
-                    // Preparar la consulta para llamar al procedimiento almacenado
                     SqlCommand command = new SqlCommand(procedureName, connection);
                     command.CommandType = CommandType.StoredProcedure;
-
-                    // Si el procedimiento tiene parámetros, puedes añadirlos aquí.
                     command.Parameters.AddWithValue("@cTexto", textBox1.Text);
 
                     SqlDataAdapter adapter = new SqlDataAdapter(command);
                     DataTable dataTable = new DataTable();
                     adapter.Fill(dataTable);
-
-                    // Asigna los datos al DataGridView correspondiente
                     targetGridView.DataSource = dataTable;
-
-                    // Mostrar la cantidad de filas obtenidas (temporalmente)
                     MessageBox.Show($"Cargadas {dataTable.Rows.Count} filas de {tableName}.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
