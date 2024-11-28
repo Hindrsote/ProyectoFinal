@@ -54,6 +54,7 @@
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
+            this.tabControl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.89565F);
             this.tabControl1.Location = new System.Drawing.Point(12, 24);
             this.tabControl1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabControl1.Name = "tabControl1";
@@ -65,10 +66,10 @@
             // 
             this.tabPage1.BackColor = System.Drawing.SystemColors.ActiveBorder;
             this.tabPage1.Controls.Add(this.dataGridView1);
-            this.tabPage1.Location = new System.Drawing.Point(4, 28);
+            this.tabPage1.Location = new System.Drawing.Point(4, 36);
             this.tabPage1.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Size = new System.Drawing.Size(696, 261);
+            this.tabPage1.Size = new System.Drawing.Size(696, 253);
             this.tabPage1.TabIndex = 5;
             this.tabPage1.Text = "Alumnos";
             // 
@@ -156,20 +157,22 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(790, 24);
+            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.89565F);
+            this.button2.Location = new System.Drawing.Point(746, 60);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(169, 31);
+            this.button2.Size = new System.Drawing.Size(279, 49);
             this.button2.TabIndex = 5;
             this.button2.Text = "Inscribir";
             this.button2.UseVisualStyleBackColor = true;
             // 
             // listBox1
             // 
+            this.listBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.89565F);
             this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 16;
-            this.listBox1.Location = new System.Drawing.Point(790, 75);
+            this.listBox1.ItemHeight = 24;
+            this.listBox1.Location = new System.Drawing.Point(746, 115);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(221, 20);
+            this.listBox1.Size = new System.Drawing.Size(279, 28);
             this.listBox1.TabIndex = 6;
             // 
             // Inscripciones
