@@ -14,6 +14,7 @@ namespace Proyecto_escuelas
     public partial class Listado : Form
     {
         private string connectionString = "Server=DESKTOP-2MVFTUI;Database=tp_lab4;Trusted_Connection=True;";
+
         public Listado()
         {
             InitializeComponent();
@@ -40,7 +41,12 @@ namespace Proyecto_escuelas
             }
         }
 
-
+        int CalcularEdad(DateTime fechaNacimiento)
+        {     //////////////// CALCULAR EDAD MARQUINHOS
+            DateTime fechaActual = DateTime.Today;
+            int edad = fechaActual.Year - fechaNacimiento.Year;
+            return edad;
+        }
 
         void LoadData(string tableName, DataGridView targetGridView)
         {
@@ -54,15 +60,15 @@ namespace Proyecto_escuelas
 
                     if (tableName == "Alumnos")
                     {
-                        query = "SELECT id_alumno, nombre, apellido, dni, telefono, fecha_nac, id_materia FROM Alumnos";
+                        query = "SELECT id_alumno, nombre, apellido, dni, telefono, fecha_nac FROM Alumnos";
                     }
                     else if (tableName == "Profesores")
                     {
-                        query = "SELECT id_profesor, nombre, dni, telefono, fecha_nac, id_materia FROM Profesores";
+                        query = "SELECT id_profesor, nombre, dni, telefono, fecha_nac FROM Profesores";
                     }
                     else if (tableName == "Materia")
                     {
-                        query = "SELECT id_materia, nombre, descripcion FROM Materia"; 
+                        query = "SELECT id_materia, nombre  FROM Materia";
                     }
                     else
                     {
@@ -74,7 +80,15 @@ namespace Proyecto_escuelas
                     {
                         DataTable dataTable = new DataTable();
                         adapter.Fill(dataTable);
-
+                        if (tableName == "Alumnos" || tableName == "Profesores")
+                        {
+                            if (!dataTable.Columns.Contains("Edad"))
+                            {
+                                dataTable.Columns.Add("Edad", typeof(int));
+                            }
+                            foreach (DataRow row in dataTable.Rows) { DateTime fechaNac = Convert.ToDateTime(row["fecha_nac"]); 
+                                int edad = CalcularEdad(fechaNac);
+                                row["Edad"] = edad; } }
                         targetGridView.DataSource = dataTable;
 
                         MessageBox.Show($"Cargadas {dataTable.Rows.Count} filas de {tableName}.");
@@ -85,9 +99,10 @@ namespace Proyecto_escuelas
             {
                 MessageBox.Show("Error al cargar los datos: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            
         }
 
-        private void button1_Click(object sender, EventArgs e)                                                 //LISTAR 
+        private void button1_Click(object sender, EventArgs e)                         //LISTAR CON PROCEDIMIENTOS DE NICO ALMACENADOS EN LA BASE DE DATOS
         {
             if (tabControl1.SelectedIndex == 0)
             {
@@ -128,6 +143,13 @@ namespace Proyecto_escuelas
         }
 
         private void button2_Click(object sender, EventArgs e)
+        {
+            Form1 inicio = new Form1();
+            inicio.Show();
+            this.Hide();
+        }
+
+        private void Inicio_Click(object sender, EventArgs e)
         {
             Form1 inicio = new Form1();
             inicio.Show();

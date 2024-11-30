@@ -122,30 +122,32 @@ namespace Proyecto_escuelas
 
         }
 
-        private void button1_Click_2(object sender, EventArgs e) //AÑADIR o AGREGAR!!!!!!!!!!!!
+        private void button1_Click_2(object sender, EventArgs e) //////////////////////////////////AÑADIR o AGREGAR!!!!!!!!!!!!
         {
 
-            if (!Regex.IsMatch(textBox1.Text, @"^[a-zA-Z]+$"))  
+            if (!Regex.IsMatch(textBox1.Text, @"^[a-zA-Z]+$"))
             {
                 MessageBox.Show("El campo 'Nombre' solo debe contener letras.", "Error de Validación", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            if (!Regex.IsMatch(textBox2.Text, @"^[a-zA-Z]+$")) 
+            if (!Regex.IsMatch(textBox2.Text, @"^[a-zA-Z]+$"))
             {
                 MessageBox.Show("El campo 'Apellido' solo debe contener letras.", "Error de Validación", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            if (!Regex.IsMatch(textBox3.Text, @"^\d+$")) 
+            // Validación del DNI con un rango de 7 a 8 dígitos
+            if (!Regex.IsMatch(textBox3.Text, @"^\d{7,8}$"))
             {
-                MessageBox.Show("El campo 'DNI' solo debe contener números.", "Error de Validación", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("El campo 'DNI' debe contener entre 7 y 8 dígitos.", "Error de Validación", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            if (!Regex.IsMatch(textBox4.Text, @"^\d+$"))
+            // Validación del Teléfono (números entre 7 y 15 dígitos)
+            if (!Regex.IsMatch(textBox4.Text, @"^\d{7,15}$"))
             {
-                MessageBox.Show("El campo 'Teléfono' solo debe contener números.", "Error de Validación", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("El campo 'Teléfono' debe contener entre 7 y 15 dígitos.", "Error de Validación", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -165,11 +167,11 @@ namespace Proyecto_escuelas
 
             if (tabControl1.SelectedTab == tabPage1)
             {
-                tableName = "Alumnos"; 
+                tableName = "Alumnos";
             }
             else if (tabControl1.SelectedTab == tabPage2)
             {
-                tableName = "Profesores"; 
+                tableName = "Profesores";
             }
             else
             {
@@ -181,10 +183,22 @@ namespace Proyecto_escuelas
 
             try
             {
-
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
+                    string checkQuery = $"SELECT COUNT(*) FROM {tableName} WHERE dni = @DNI";
+                    using (SqlCommand checkCommand = new SqlCommand(checkQuery, connection))
+                    {
+                        checkCommand.Parameters.AddWithValue("@DNI", textBox3.Text);
+                        connection.Open();
+                        int existingRecords = Convert.ToInt32(checkCommand.ExecuteScalar());
+                        if (existingRecords > 0)
+                        {
+                            MessageBox.Show("DNI DUPLICADO", "Error de Validación", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                    }
 
+                    // Inserción del nuevo registro
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
                         command.Parameters.AddWithValue("@Nombre", textBox1.Text);
@@ -192,11 +206,11 @@ namespace Proyecto_escuelas
                         command.Parameters.AddWithValue("@DNI", textBox3.Text);
                         command.Parameters.AddWithValue("@Telefono", textBox4.Text);
                         command.Parameters.AddWithValue("@FechaNac", fechaNac);
-                        connection.Open();
+
                         int rowsAffected = command.ExecuteNonQuery();
                         if (rowsAffected > 0)
                         {
-                            MessageBox.Show($"El registro ha sido añadido correctamente a la tabla {tableName}.",
+                            MessageBox.Show($"Exitooo {tableName}.",
                                             "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
                         else
@@ -206,11 +220,11 @@ namespace Proyecto_escuelas
                         }
                     }
 
-                    if (tabControl1.SelectedIndex == 0) 
+                    if (tabControl1.SelectedIndex == 0)
                     {
                         LoadData("Alumnos", dataGridView1);
                     }
-                    else if (tabControl1.SelectedIndex == 1) 
+                    else if (tabControl1.SelectedIndex == 1)
                     {
                         LoadData("Profesores", dataGridView2);
                     }
@@ -292,7 +306,7 @@ namespace Proyecto_escuelas
 
                         int rowsAffected = command.ExecuteNonQuery();
                         MessageBox.Show(rowsAffected > 0
-                            ? "Registro modificado exitosamente."
+                            ? "Modificado"
                             : "No se pudo modificar el registro.");
                     }
                 }
