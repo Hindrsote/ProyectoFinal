@@ -42,7 +42,7 @@ namespace Proyecto_escuelas
         }
 
         int CalcularEdad(DateTime fechaNacimiento)
-        {     //////////////// CALCULAR EDAD MARQUINHOS
+        { 
             DateTime fechaActual = DateTime.Today;
             int edad = fechaActual.Year - fechaNacimiento.Year;
             return edad;
@@ -102,7 +102,7 @@ namespace Proyecto_escuelas
             
         }
 
-        private void button1_Click(object sender, EventArgs e)                         //LISTAR CON PROCEDIMIENTOS DE NICO ALMACENADOS EN LA BASE DE DATOS
+        private void button1_Click(object sender, EventArgs e)           
         {
             if (tabControl1.SelectedIndex == 0)
             {
@@ -144,14 +144,14 @@ namespace Proyecto_escuelas
 
         private void button2_Click(object sender, EventArgs e)
         {
-            Form1 inicio = new Form1();
+            Form1 inicio = new Form1("UsuarioActual", "Vendedor"); // Cambia "UsuarioActual" y "Vendedor" según corresponda
             inicio.Show();
             this.Hide();
         }
 
         private void Inicio_Click(object sender, EventArgs e)
         {
-            Form1 inicio = new Form1();
+            Form1 inicio = new Form1(UsuarioActual.Nombre, UsuarioActual.Rol); // Cambia "UsuarioActual" y "Vendedor" según corresponda
             inicio.Show();
             this.Hide();
         }

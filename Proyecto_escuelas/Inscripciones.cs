@@ -1,14 +1,57 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Windows.Forms;
+using static Proyecto_escuelas.Form1;
 
 namespace Proyecto_escuelas
 {
     public partial class Inscripciones : Form
 
     {
+        private List<ArticuloSeleccionado> articulosSeleccionados = new List<ArticuloSeleccionado>();
+
+        // Método para agregar un artículo a la lista y actualizar el DataGridView
+        public void AgregarArticuloSeleccionado(ArticuloSeleccionado articulo)
+        {
+            articulosSeleccionados.Add(articulo);
+            ActualizarDataGridView();
+        }
+
+        // Método para actualizar el DataGridView con los artículos seleccionados
+        private void ActualizarDataGridView()
+        {
+            dataGridView1.DataSource = null; // Limpiar el origen de datos
+            dataGridView1.DataSource = articulosSeleccionados;
+
+            // Configurar columnas si es necesario
+            dataGridView1.Columns["Nombre"].HeaderText = "Nombre del Artículo";
+            dataGridView1.Columns["Precio"].HeaderText = "Precio";
+            dataGridView1.Columns["Cantidad"].HeaderText = "Cantidad";
+            dataGridView1.Columns["Stock"].HeaderText = "Stock";
+            // Asegúrate de que el ArticuloID esté oculto si no deseas mostrarlo al usuario
+            if (dataGridView1.Columns.Contains("ArticuloID"))
+            {
+                dataGridView1.Columns["ArticuloID"].Visible = false;
+            }
+        }
+        public Inscripciones()
+        {
+            InitializeComponent();
+        }
+        private void button1_Click(object sender, EventArgs e)
+        {
+            using (Ventacarga ventacargaForm = new Ventacarga(articulosSeleccionados))
+            {
+
+                ventacargaForm.Owner = this; // Establece el formulario actual como dueño
+                ventacargaForm.ShowDialog();
+                ActualizarDataGridView();
+            }
+        }
+
         public class ListBoxItem
         {
             public int Id { get; set; }
@@ -20,81 +63,17 @@ namespace Proyecto_escuelas
             }
         }
 
-        private string connectionString = "Server=DESKTOP-2MVFTUI;Database=tp_lab4;Trusted_Connection=True;";
-        public Inscripciones()
-        {
-            InitializeComponent();
-            tabControl1.SelectedIndexChanged += TabControl1_SelectedIndexChanged;
-            LoadData("Alumnos", dataGridView1);
-            LoadData("Profesores", dataGridView2);
-            LoadData("Materia", dataGridView6);
-        }
+        private string connectionString = "Server=DESKTOP-2MVFTUI;Database=TiendaDb;Trusted_Connection=True;";
         private void TabControl1_SelectedIndexChanged(object sender, EventArgs e)           // para VISUALIZAR
         {
             if (tabControl1.SelectedIndex == 0)
             {
-                LoadData("Alumnos", dataGridView1);
-            }
-            else if (tabControl1.SelectedIndex == 1)
-            {
-                LoadData("Profesores", dataGridView2);
             }
             else if (tabControl2.SelectedIndex == 0)
             {
-                LoadData("Materia", dataGridView6);
             }
         }
-        void LoadData(string tableName, object targetControl)
-        {
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(connectionString))
-                {
-                    connection.Open();
 
-                    string query = "";
-
-                    if (tableName == "Alumnos")
-                    {
-                        query = "SELECT id_alumno, nombre, apellido, dni, telefono, fecha_nac, materias FROM Alumnos";
-                    }
-                    else if (tableName == "Profesores")
-                    {
-                        query = "SELECT id_profesor, nombre, dni, telefono, fecha_nac, materias FROM Profesores";
-                    }
-                    else if (tableName == "Materia")
-                    {
-                        query = "SELECT id_materia, nombre FROM Materia";
-                    }
-                    else
-                    {
-                        throw new ArgumentException("Tabla no válida.");
-                    }
-
-                    using (SqlCommand command = new SqlCommand(query, connection))
-                    using (SqlDataAdapter adapter = new SqlDataAdapter(command))
-                    {
-                        DataTable dataTable = new DataTable();
-                        adapter.Fill(dataTable);
-
-                        if (targetControl is DataGridView gridView)
-                        {
-                            gridView.DataSource = dataTable;
-                        }
-                        else
-                        {
-                            throw new ArgumentException("El control de destino no es compatible.");
-                        }
-
-                        MessageBox.Show($"Cargadas {dataTable.Rows.Count} filas de {tableName}.");
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error al cargar los datos: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
 
 
         private void Inscripciones1(object sender, EventArgs e)
@@ -105,324 +84,207 @@ namespace Proyecto_escuelas
         {
 
         }
-        void LoadData(string tableName, DataGridView targetGridView)
+
+
+
+        private void button2_Click(object sender, EventArgs e)
         {
-            try
+            if (dataGridView1.Rows.Count == 0)
             {
-                using (SqlConnection connection = new SqlConnection(connectionString))
-                {
-                    connection.Open();
-
-                    string query = "";
-
-                    if (tableName == "Alumnos")
-                    {
-                        query = "SELECT id_alumno, nombre, apellido, dni, telefono, fecha_nac, materias FROM Alumnos";
-                    }
-                    else if (tableName == "Profesores")
-                    {
-                        query = "SELECT id_profesor, nombre, dni, telefono, fecha_nac, materias FROM Profesores";
-                    }
-                    else if (tableName == "Materia")
-                    {
-                        query = "SELECT id_materia, nombre, descripcion FROM Materia";
-                    }
-                    else
-                    {
-
-                        throw new ArgumentException("Tabla no válida.");
-                    }
-
-                    using (SqlCommand command = new SqlCommand(query, connection))
-                    using (SqlDataAdapter adapter = new SqlDataAdapter(command))
-                    {
-                        DataTable dataTable = new DataTable();
-                        adapter.Fill(dataTable);
-
-
-                        targetGridView.DataSource = dataTable;
-
-
-                        MessageBox.Show($"Cargadas {dataTable.Rows.Count} filas de {tableName}.");
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error al cargar los datos: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-
-        private void button1_Click(object sender, EventArgs e) // AGREGAR MATERIAAAAAAAAAAAAAAAAAA
-        {
-            if (string.IsNullOrWhiteSpace(textBox1.Text))
-            {
-                MessageBox.Show("El campo 'Nombre' no puede estar vacío.", "Error de Validación", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("No hay artículos seleccionados para la venta.");
                 return;
             }
 
-            if (textBox1.Text.Length > 100)
+            decimal montoVentaTotal = 0;
+            List<string> articulosVendidos = new List<string>(); // Lista para almacenar los nombres de los artículos vendidos
+
+            // Obtener el ClienteID del DataGridView6 (cliente seleccionado)
+            if (dataGridView6.SelectedRows.Count == 0)
             {
-                MessageBox.Show("El campo 'Nombre' no puede exceder los 100 caracteres.", "Error de Validación", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Por favor, seleccione un cliente.");
                 return;
             }
-            string connectionString = "Server=DESKTOP-2MVFTUI;Database=tp_lab4;Trusted_Connection=True;";
-            string query = "INSERT INTO Materia (nombre) VALUES (@Nombre)";
 
-            try
+            int clienteID = Convert.ToInt32(dataGridView6.SelectedRows[0].Cells["ClienteID"].Value);
+            string clienteNombre = dataGridView6.SelectedRows[0].Cells["Nombre"].Value.ToString();
+            string clienteApellido = dataGridView6.SelectedRows[0].Cells["Apellido"].Value.ToString();
+
+            // Obtener el medio de pago seleccionado del ComboBox
+            string medioPago = comboBox1.SelectedItem?.ToString();
+            if (string.IsNullOrEmpty(medioPago))
             {
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                MessageBox.Show("Por favor, seleccione un medio de pago.");
+                return;
+            }
+
+            // Recorrer todas las filas de DataGridView1 (artículos seleccionados)
+            foreach (DataGridViewRow row in dataGridView1.Rows)
+            {
+                if (row.Cells["Cantidad"].Value != null && row.Cells["Cantidad"].Value != DBNull.Value)
                 {
-                    using (SqlCommand command = new SqlCommand(query, connection))
+                    int cantidad = Convert.ToInt32(row.Cells["Cantidad"].Value);
+                    decimal precio = Convert.ToDecimal(row.Cells["Precio"].Value);
+                    int articuloID = Convert.ToInt32(row.Cells["ArticuloID"].Value);
+                    int stock = Convert.ToInt32(row.Cells["Stock"].Value);
+
+                    if (cantidad > stock)
                     {
-                        command.Parameters.AddWithValue("@Nombre", textBox1.Text.Trim());
-                        connection.Open();
-                        int rowsAffected = command.ExecuteNonQuery();
-                        if (rowsAffected > 0)
-                        {
-                            MessageBox.Show("La materia ha sido añadida correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            textBox1.Clear();
-                            LoadData("Materia", dataGridView6);
-                        }
-                        else
-                        {
-                            MessageBox.Show("No se pudo agregar la materia.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
+                        MessageBox.Show("La cantidad solicitada excede el stock disponible.");
+                        return;
                     }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Ocurrió un error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
 
-        private void button2_Click(object sender, EventArgs e) ////////////////// Agregar materias a profe o estudiante
-        {
-            if ((dataGridView1.SelectedRows.Count > 0 || dataGridView2.SelectedRows.Count > 0) && dataGridView6.SelectedRows.Count > 0)
-            {
-                try
-                {
-                    DataGridView activeGridView = dataGridView1.SelectedRows.Count > 0 ? dataGridView1 : dataGridView2;
-                    int idSeleccionado = Convert.ToInt32(activeGridView.SelectedRows[0].Cells[activeGridView == dataGridView1 ? "id_alumno" : "id_profesor"].Value);
-                    string tipoSeleccionado = activeGridView == dataGridView1 ? "Alumnos" : "Profesores";
-                    string nombreMateria = dataGridView6.SelectedRows[0].Cells["nombre"].Value.ToString().Trim();
+                    // Actualizar stock en la base de datos
+                    string updateStockQuery = "UPDATE Articulos SET Stock = Stock - @Cantidad WHERE ArticuloID = @ArticuloID";
+
                     using (SqlConnection connection = new SqlConnection(connectionString))
                     {
                         connection.Open();
-                        string selectQuery = tipoSeleccionado == "Alumnos"
-                            ? "SELECT materias FROM Alumnos WHERE id_alumno = @id"
-                            : "SELECT materias FROM Profesores WHERE id_profesor = @id";
 
-                        string materiasActuales = "";
-
-                        using (SqlCommand selectCmd = new SqlCommand(selectQuery, connection))
+                        using (SqlCommand updateCommand = new SqlCommand(updateStockQuery, connection))
                         {
-                            selectCmd.Parameters.AddWithValue("@id", idSeleccionado);
-                            using (SqlDataReader reader = selectCmd.ExecuteReader())
-                            {
-                                if (reader.Read())
-                                {
-                                    materiasActuales = reader["materias"] != DBNull.Value ? reader["materias"].ToString() : "";
-                                }
-                            }
-                        }
+                            updateCommand.Parameters.AddWithValue("@Cantidad", cantidad);
+                            updateCommand.Parameters.AddWithValue("@ArticuloID", articuloID);
 
-                        if (!materiasActuales.Split(',').Select(m => m.Trim()).Contains(nombreMateria))
-                        {
-
-                            materiasActuales = string.IsNullOrEmpty(materiasActuales)
-                                ? nombreMateria
-                                : $"{materiasActuales}, {nombreMateria}";
-
-                            string updateQuery = tipoSeleccionado == "Alumnos"
-                                ? "UPDATE Alumnos SET materias = @materias WHERE id_alumno = @id"
-                                : "UPDATE Profesores SET materias = @materias WHERE id_profesor = @id";
-
-                            using (SqlCommand updateCmd = new SqlCommand(updateQuery, connection))
-                            {
-                                updateCmd.Parameters.AddWithValue("@materias", materiasActuales);
-                                updateCmd.Parameters.AddWithValue("@id", idSeleccionado);
-
-                                int rowsAffected = updateCmd.ExecuteNonQuery();
-                                if (rowsAffected > 0)
-                                {
-                                    MessageBox.Show("Dime que sí, dime que sí");
-                                    LoadData("Alumnos", dataGridView1);
-                                    LoadData("Profesores", dataGridView2);
-                                }
-                                else
-                                {
-                                    MessageBox.Show("No se pudo realizar la inscripción.");
-                                }
-                            }
-                        }
-                        else
-                        {
-                            MessageBox.Show("La materia ya está inscrita.");
+                            updateCommand.ExecuteNonQuery();
                         }
                     }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error al inscribir: " + ex.Message);
+
+                    // Sumar el monto de la venta
+                    montoVentaTotal += precio * cantidad;
+
+                    // Añadir el nombre del artículo vendido a la lista
+                    string articuloNombre = row.Cells["Nombre"].Value.ToString();
+                    articulosVendidos.Add($"{articuloNombre} x{cantidad}");
                 }
             }
-            else
+
+            string insertVentaQuery = @"
+INSERT INTO Ventas (UsuarioID, ClienteID, MontoVenta, FechaVenta, MedioPago) 
+VALUES (@UsuarioID, @ClienteID, @MontoVenta, @FechaVenta, @MedioPago);
+SELECT SCOPE_IDENTITY();"; // Obtener el ID de la venta recién insertada.
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                MessageBox.Show("Seleccione un alumno/profesor y una materia.");
+                connection.Open();
+
+                using (SqlCommand insertVentaCommand = new SqlCommand(insertVentaQuery, connection))
+                {
+                    insertVentaCommand.Parameters.AddWithValue("@UsuarioID", UsuarioActual.Nombre); // Usuario actual
+                    insertVentaCommand.Parameters.AddWithValue("@ClienteID", clienteID);
+                    insertVentaCommand.Parameters.AddWithValue("@MontoVenta", montoVentaTotal);
+                    insertVentaCommand.Parameters.AddWithValue("@FechaVenta", DateTime.Now);
+                    insertVentaCommand.Parameters.AddWithValue("@MedioPago", medioPago); // Medio de pago seleccionado
+
+                    int ventaID = Convert.ToInt32(insertVentaCommand.ExecuteScalar()); // Obtener el ID de la venta recién registrada.
+
+                    // Registrar los artículos vendidos
+                    foreach (DataGridViewRow row in dataGridView1.Rows)
+                    {
+                        if (row.Cells["Cantidad"].Value != null && row.Cells["Cantidad"].Value != DBNull.Value)
+                        {
+                            string insertArticuloVendidoQuery = @"
+                    INSERT INTO ArticulosVendidos (VentaID, ArticuloID, Cantidad, Precio) 
+                    VALUES (@VentaID, @ArticuloID, @Cantidad, @Precio)";
+
+                            using (SqlCommand insertArticuloCommand = new SqlCommand(insertArticuloVendidoQuery, connection))
+                            {
+                                int cantidad = Convert.ToInt32(row.Cells["Cantidad"].Value);
+                                decimal precio = Convert.ToDecimal(row.Cells["Precio"].Value);
+                                int articuloID = Convert.ToInt32(row.Cells["ArticuloID"].Value);
+
+                                insertArticuloCommand.Parameters.AddWithValue("@VentaID", ventaID);
+                                insertArticuloCommand.Parameters.AddWithValue("@ArticuloID", articuloID);
+                                insertArticuloCommand.Parameters.AddWithValue("@Cantidad", cantidad);
+                                insertArticuloCommand.Parameters.AddWithValue("@Precio", precio);
+
+                                insertArticuloCommand.ExecuteNonQuery();
+                            }
+                        }
+                    }
+
+                    // Crear el mensaje detallado con los artículos vendidos
+                    string articulosVendidosTexto = string.Join(", ", articulosVendidos); // Concatenar los artículos con cantidades
+
+                    // Registrar log
+                    string logQuery = @"
+            INSERT INTO Logs (UsuarioID, Accion, FechaHora) 
+            VALUES (@UsuarioID, @Accion, @FechaHora)";
+
+                    using (SqlCommand logCommand = new SqlCommand(logQuery, connection))
+                    {
+                        string accionLog = $"Venta registrada para el cliente {clienteNombre} {clienteApellido}: Se vendieron {articulosVendidos.Count} artículos ({articulosVendidosTexto}) por un total de {montoVentaTotal:C} usando el medio de pago: {medioPago}";
+
+                        logCommand.Parameters.AddWithValue("@UsuarioID", UsuarioActual.Nombre); // Usuario actual
+                        logCommand.Parameters.AddWithValue("@Accion", accionLog);
+                        logCommand.Parameters.AddWithValue("@FechaHora", DateTime.Now);
+
+                        logCommand.ExecuteNonQuery();
+                    }
+                }
             }
+            MessageBox.Show("Venta realizada con éxito.", "Venta Exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            // Desvincula temporalmente el DataGridView
+            dataGridView1.DataSource = null;
+
+            // Limpiar las filas (esto funcionará sin el binding)
+            dataGridView1.Rows.Clear();
         }
+        // Limpiar el DataGridView después de realizar la venta
 
         private void button3_Click(object sender, EventArgs e) // Eliminar materias de dataGridView6
         {
-            try
+            string searchTerm = textBox1.Text.Trim(); // Obtener el texto de búsqueda
+
+            if (string.IsNullOrEmpty(searchTerm))
             {
-                using (SqlConnection connection = new SqlConnection(connectionString))
-                {
-                    connection.Open();
-
-                    int selectedRowIndex = dataGridView6.CurrentCell?.RowIndex ?? -1;
-
-                    if (selectedRowIndex < 0)
-                    {
-                        MessageBox.Show("Por favor selecciona una fila para eliminar.");
-                        return;
-                    }
-
-                    int idMateria = Convert.ToInt32(dataGridView6.Rows[selectedRowIndex].Cells["id_materia"].Value);
-                    string checkQuery = @"
-                SELECT COUNT(*) AS Inscripciones
-                FROM (
-                    SELECT materias FROM Alumnos WHERE materias LIKE '%' + @nombreMateria + '%'
-                    UNION ALL
-                    SELECT materias FROM Profesores WHERE materias LIKE '%' + @nombreMateria + '%'
-                ) AS Inscritos";
-
-                    string nombreMateria = dataGridView6.Rows[selectedRowIndex].Cells["nombre"].Value.ToString().Trim();
-
-                    using (SqlCommand checkCmd = new SqlCommand(checkQuery, connection))
-                    {
-                        checkCmd.Parameters.AddWithValue("@nombreMateria", nombreMateria);
-                        int inscripciones = (int)checkCmd.ExecuteScalar();
-
-                        if (inscripciones > 0)
-                        {
-                            MessageBox.Show($"No se puede eliminar. Hay {inscripciones} inscritos en esta materia.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            return;
-                        }
-                    }
-                    var confirmResult = MessageBox.Show(
-                        "¿Estás seguro de eliminar esta materia?",
-                        "Confirmación",
-                        MessageBoxButtons.YesNo,
-                        MessageBoxIcon.Warning);
-
-                    if (confirmResult != DialogResult.Yes)
-                        return;
-                    string deleteQuery = "DELETE FROM Materia WHERE id_materia = @id_materia";
-
-                    using (SqlCommand deleteCmd = new SqlCommand(deleteQuery, connection))
-                    {
-                        deleteCmd.Parameters.AddWithValue("@id_materia", idMateria);
-                        int rowsAffected = deleteCmd.ExecuteNonQuery();
-
-                        MessageBox.Show(rowsAffected > 0
-                            ? "Materia eliminada exitosamente."
-                            : "Error al eliminar la materia.");
-                    }
-                }
-
-                // Yo aqui te espero solo vente vente vente
-                LoadData("Materia", dataGridView6);
-                LoadData("Alumnos", dataGridView1);
-                LoadData("Profesores", dataGridView2);
+                MessageBox.Show("Por favor, ingrese un término de búsqueda.");
+                return;
             }
-            catch (Exception ex)
+
+            string query = @"
+        SELECT ClienteID, Nombre, Apellido 
+        FROM Clientes
+        WHERE Nombre LIKE @SearchTerm OR Apellido LIKE @SearchTerm";
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                MessageBox.Show("Error al eliminar: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                connection.Open();
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    // Parámetro para evitar inyecciones SQL
+                    command.Parameters.AddWithValue("@SearchTerm", "%" + searchTerm + "%");
+
+                    SqlDataAdapter dataAdapter = new SqlDataAdapter(command);
+                    DataTable dataTable = new DataTable();
+                    dataAdapter.Fill(dataTable);
+
+                    // Asignar el resultado al DataGridView
+                    dataGridView6.DataSource = dataTable;
+                }
             }
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-            if ((dataGridView1.SelectedRows.Count > 0 || dataGridView2.SelectedRows.Count > 0) && dataGridView6.SelectedRows.Count > 0)
-            {
-                try
-                {
-                    DataGridView activeGridView = dataGridView1.SelectedRows.Count > 0 ? dataGridView1 : dataGridView2;
-                    int idSeleccionado = Convert.ToInt32(activeGridView.SelectedRows[0].Cells[activeGridView == dataGridView1 ? "id_alumno" : "id_profesor"].Value);
-                    string tipoSeleccionado = activeGridView == dataGridView1 ? "Alumnos" : "Profesores";
-                    string nombreMateria = dataGridView6.SelectedRows[0].Cells["nombre"].Value.ToString().Trim();
-                    using (SqlConnection connection = new SqlConnection(connectionString))
-                    {
-                        connection.Open();
-                        string selectQuery = tipoSeleccionado == "Alumnos"
-                            ? "SELECT materias FROM Alumnos WHERE id_alumno = @id"
-                            : "SELECT materias FROM Profesores WHERE id_profesor = @id";
-                        string materiasActuales = "";
-                        using (SqlCommand selectCmd = new SqlCommand(selectQuery, connection))
-                        {
-                            selectCmd.Parameters.AddWithValue("@id", idSeleccionado);
-                            using (SqlDataReader reader = selectCmd.ExecuteReader())
-                            {
-                                if (reader.Read())
-                                {
-                                    materiasActuales = reader["materias"] != DBNull.Value ? reader["materias"].ToString() : "";
-                                }
-                            }
-                        }
-                        var materiasList = materiasActuales.Split(',').Select(m => m.Trim()).ToList();
-                        if (materiasList.Contains(nombreMateria))
-                        {
-                            materiasList.Remove(nombreMateria);
-                            string nuevasMaterias = string.Join(", ", materiasList);
-
-                            string updateQuery = tipoSeleccionado == "Alumnos"
-                                ? "UPDATE Alumnos SET materias = @materias WHERE id_alumno = @id"
-                                : "UPDATE Profesores SET materias = @materias WHERE id_profesor = @id";
-
-                            using (SqlCommand updateCmd = new SqlCommand(updateQuery, connection))
-                            {
-                                updateCmd.Parameters.AddWithValue("@materias", nuevasMaterias);
-                                updateCmd.Parameters.AddWithValue("@id", idSeleccionado);
-
-                                int rowsAffected = updateCmd.ExecuteNonQuery();
-                                if (rowsAffected > 0)
-                                {
-                                    MessageBox.Show("Inscripción deshecha con éxito.");
-                                    LoadData("Alumnos", dataGridView1);
-                                    LoadData("Profesores", dataGridView2);
-                                }
-                                else
-                                {
-                                    MessageBox.Show("No se pudo deshacer la inscripción.");
-                                }
-                            }
-                        }
-                        else
-                        {
-                            MessageBox.Show("La materia no está inscrita.");
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error al deshacer la inscripción: " + ex.Message);
-                }
-            }
-            else
-            {
-                MessageBox.Show("Seleccione un alumno/profesor y una materia.");
-            }
+            
         }
 
         private void Inicio_Click(object sender, EventArgs e)
         {
-            Form1 inicio = new Form1();
+            Form1 inicio = new Form1(UsuarioActual.Nombre, UsuarioActual.Rol); // Cambia "UsuarioActual" y "Vendedor" según corresponda
             inicio.Show();
             this.Hide();
+        }
+
+        private void dataGridView6_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

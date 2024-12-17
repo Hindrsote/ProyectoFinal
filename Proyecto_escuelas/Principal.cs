@@ -16,29 +16,30 @@ namespace Proyecto_escuelas
 {
     public partial class Principal : Form
     {
-        private string connectionString = "Server=DESKTOP-2MVFTUI;Database=tp_lab4;Trusted_Connection=True;";
+        private string connectionString = "Server=DESKTOP-2MVFTUI;Database=TiendaDB;Trusted_Connection=True;";
         public Principal()
         {
             InitializeComponent();
             tabControl1.SelectedIndexChanged += TabControl1_SelectedIndexChanged;
-
-            LoadData("Alumnos", dataGridView1);
-            LoadData("Profesores", dataGridView2);
+            LoadData("Articulos", dataGridView1, 1);
+            LoadData("Articulos", dataGridView2, 0);
         }
 
 
         private void TabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (tabControl1.SelectedIndex == 0) 
+            if (tabControl1.SelectedIndex == 0) // Pestaña 1: Visible = 1
             {
-                LoadData("Alumnos", dataGridView1);
+                LoadData("Articulos", dataGridView1, 1);
+                button4.Visible = false;
             }
-            else if (tabControl1.SelectedIndex == 1) 
+            else if (tabControl1.SelectedIndex == 1) // Pestaña 2: Visible = 0
             {
-                LoadData("Profesores", dataGridView2);
+                LoadData("Articulos", dataGridView2, 0);
+                button4.Visible = true;
             }
         }
-        void LoadData(string tableName, DataGridView targetGridView)  
+        void LoadData(string tableName, DataGridView targetGridView, int visibleFlag)
         {
             try
             {
@@ -48,34 +49,31 @@ namespace Proyecto_escuelas
 
                     string query = "";
 
-                    if (tableName == "Alumnos")
+                    if (tableName == "Articulos")
                     {
-                        query = "SELECT id_alumno, nombre, apellido, dni, telefono, fecha_nac, id_materia FROM Alumnos";
-                    }
-                    else if (tableName == "Profesores")
-                    {
-                        query = "SELECT id_profesor, nombre, dni, telefono, fecha_nac, id_materia FROM Profesores";
-                    }
-                    else if (tableName == "Materia")
-                    {
-                        query = "SELECT id_materia, nombre FROM Materia"; 
+                        // Filtrar por el valor de la columna Visible
+                        query = @"SELECT ArticuloID, Nombre, Precio, Descripcion, Stock, FechaAlta, Estado 
+                          FROM Articulos 
+                          WHERE Visible = @VisibleFlag";
                     }
                     else
                     {
-
-                        throw new ArgumentException("Tabla no válida.");
+                        MessageBox.Show("Tabla no reconocida.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
                     }
 
-
                     using (SqlCommand command = new SqlCommand(query, connection))
-                    using (SqlDataAdapter adapter = new SqlDataAdapter(command))
                     {
-                        DataTable dataTable = new DataTable();
-                        adapter.Fill(dataTable);
+                        // Parámetro para el filtro de Visible
+                        command.Parameters.AddWithValue("@VisibleFlag", visibleFlag);
 
-                        targetGridView.DataSource = dataTable;
+                        using (SqlDataAdapter adapter = new SqlDataAdapter(command))
+                        {
+                            DataTable dataTable = new DataTable();
+                            adapter.Fill(dataTable);
 
-                        MessageBox.Show($"Cargadas {dataTable.Rows.Count} filas de {tableName}.");
+                            targetGridView.DataSource = dataTable;
+                        }
                     }
                 }
             }
@@ -97,7 +95,7 @@ namespace Proyecto_escuelas
 
         private void button1_Click_1(object sender, EventArgs e)
         {
-            Form1 inicio = new Form1();
+            Form1 inicio = new Form1(UsuarioActual.Nombre, UsuarioActual.Rol); // Cambia "UsuarioActual" y "Vendedor" según corresponda
             inicio.Show();
             this.Hide();
         }
@@ -122,117 +120,68 @@ namespace Proyecto_escuelas
 
         }
 
-        private void button1_Click_2(object sender, EventArgs e) //////////////////////////////////AÑADIR o AGREGAR!!!!!!!!!!!!
+        private void button1_Click_2(object sender, EventArgs e)
         {
+            // Cadena de conexión
+            string connectionString = "Server=DESKTOP-2MVFTUI;Database=TiendaDB;Trusted_Connection=True;";
 
-            if (!Regex.IsMatch(textBox1.Text, @"^[a-zA-Z]+$"))
+            // Validar si estamos en la pestaña correcta
+            if (tabControl1.SelectedTab != tabPage1)
             {
-                MessageBox.Show("El campo 'Nombre' solo debe contener letras.", "Error de Validación", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Por ahora solo puedes agregar artículos.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            if (!Regex.IsMatch(textBox2.Text, @"^[a-zA-Z]+$"))
+            // Validar los campos obligatorios
+            if (string.IsNullOrWhiteSpace(textBox1.Text) ||
+                string.IsNullOrWhiteSpace(textBox2.Text))
             {
-                MessageBox.Show("El campo 'Apellido' solo debe contener letras.", "Error de Validación", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Por favor, completa los campos obligatorios: Nombre, Precio", "Error de Validación", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            // Validación del DNI con un rango de 7 a 8 dígitos
-            if (!Regex.IsMatch(textBox3.Text, @"^\d{7,8}$"))
+            // Conversión y validación de datos numéricos
+            if (!decimal.TryParse(textBox2.Text, out decimal precio))
             {
-                MessageBox.Show("El campo 'DNI' debe contener entre 7 y 8 dígitos.", "Error de Validación", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("El campo 'Precio' debe ser un valor numérico.", "Error de Validación", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            // Validación del Teléfono (números entre 7 y 15 dígitos)
-            if (!Regex.IsMatch(textBox4.Text, @"^\d{7,15}$"))
-            {
-                MessageBox.Show("El campo 'Teléfono' debe contener entre 7 y 15 dígitos.", "Error de Validación", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
 
-            DateTime fechaNac = dateTimePicker1.Value.Date;
-
-            DateTime fechaLimite = DateTime.Today.AddYears(-5);
-            if (fechaNac > fechaLimite)
-            {
-                MessageBox.Show("La fecha de nacimiento debe ser al menos de hace 5 años.", "Error de Validación", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            string connectionString = @"Server=localhost;Database=tp_lab4;Trusted_Connection=True;";
-
-            string tableName = "";
-            string query = "";
-
-            if (tabControl1.SelectedTab == tabPage1)
-            {
-                tableName = "Alumnos";
-            }
-            else if (tabControl1.SelectedTab == tabPage2)
-            {
-                tableName = "Profesores";
-            }
-            else
-            {
-                MessageBox.Show("No se reconoce la pestaña seleccionada.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            query = $"INSERT INTO {tableName} (nombre, apellido, dni, telefono, fecha_nac) VALUES (@Nombre, @Apellido, @DNI, @Telefono, @FechaNac)";
+            // Consulta SQL para insertar en la tabla 'Articulos'
+            string query = @"INSERT INTO Articulos (Nombre, Descripcion, Precio) 
+                     VALUES (@Nombre, @Descripcion, @Precio)";
 
             try
             {
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
-                    string checkQuery = $"SELECT COUNT(*) FROM {tableName} WHERE dni = @DNI";
-                    using (SqlCommand checkCommand = new SqlCommand(checkQuery, connection))
-                    {
-                        checkCommand.Parameters.AddWithValue("@DNI", textBox3.Text);
-                        connection.Open();
-                        int existingRecords = Convert.ToInt32(checkCommand.ExecuteScalar());
-                        if (existingRecords > 0)
-                        {
-                            MessageBox.Show("DNI DUPLICADO", "Error de Validación", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            return;
-                        }
-                    }
+                    connection.Open();
 
-                    // Inserción del nuevo registro
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
+                        // Parámetros SQL
                         command.Parameters.AddWithValue("@Nombre", textBox1.Text);
-                        command.Parameters.AddWithValue("@Apellido", textBox2.Text);
-                        command.Parameters.AddWithValue("@DNI", textBox3.Text);
-                        command.Parameters.AddWithValue("@Telefono", textBox4.Text);
-                        command.Parameters.AddWithValue("@FechaNac", fechaNac);
+                        command.Parameters.AddWithValue("@Descripcion", textBox3.Text);
+                        command.Parameters.AddWithValue("@Precio", textBox2.Text);
 
+                        // Ejecutar la consulta
                         int rowsAffected = command.ExecuteNonQuery();
                         if (rowsAffected > 0)
                         {
-                            MessageBox.Show($"Exitooo {tableName}.",
-                                            "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            MessageBox.Show("Artículo agregado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            LoadData("Articulos", dataGridView1, 1); // Refrescar DataGridView
                         }
                         else
                         {
-                            MessageBox.Show($"No se pudo agregar el registro a la tabla {tableName}.",
-                                            "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show("No se pudo agregar el artículo.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
-                    }
-
-                    if (tabControl1.SelectedIndex == 0)
-                    {
-                        LoadData("Alumnos", dataGridView1);
-                    }
-                    else if (tabControl1.SelectedIndex == 1)
-                    {
-                        LoadData("Profesores", dataGridView2);
                     }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al agregar el registro: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error al agregar el artículo: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -243,164 +192,192 @@ namespace Proyecto_escuelas
 
         private void button2_Click(object sender, EventArgs e) //MODIFICAR
         {
+            string connectionString = "Server=DESKTOP-2MVFTUI;Database=TiendaDB;Trusted_Connection=True;";
+
+            // Validar si estamos en la pestaña correcta
+            if (tabControl1.SelectedTab != tabPage1)
+            {
+                MessageBox.Show("Por ahora solo puedes modificar artículos en esta pestaña.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Validar los campos obligatorios
+            if (string.IsNullOrWhiteSpace(textBox1.Text) ||
+                string.IsNullOrWhiteSpace(textBox2.Text))
+            {
+                MessageBox.Show("Por favor, completa los campos obligatorios: Nombre, Precio y Stock.", "Error de Validación", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // Conversión y validación de datos numéricos
+            if (!decimal.TryParse(textBox2.Text, out decimal precio))
+            {
+                MessageBox.Show("El campo 'Precio' debe ser un valor numérico.", "Error de Validación", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            // Obtener el ID del artículo seleccionado
+            if (dataGridView1.CurrentRow == null || dataGridView1.CurrentRow.Index < 0)
+            {
+                MessageBox.Show("Por favor selecciona un artículo para modificar.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            int articuloID = Convert.ToInt32(dataGridView1.CurrentRow.Cells["ArticuloID"].Value); // Asume que la columna ID se llama 'ArticuloID'
+
+            // Consulta SQL para actualizar el registro en la tabla 'Articulos'
+            string query = @"UPDATE Articulos 
+                     SET Nombre = @Nombre, 
+                         Descripcion = @Descripcion, 
+                         Precio = @Precio, 
+                         Stock = @Stock 
+                     WHERE ArticuloID = @ArticuloID";
+
             try
             {
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    string tableName, idColumn;
-                    if (tabControl1.SelectedIndex == 0) 
-                    {
-                        tableName = "Alumnos";
-                        idColumn = "id_alumno";
-                    }
-                    else if (tabControl1.SelectedIndex == 1) 
-                    {
-                        tableName = "Profesores";
-                        idColumn = "id_profesor";
-                    }
-                    else
-                    {
-                        MessageBox.Show("Modificación no válida en esta pestaña.");
-                        return;
-                    }
 
-                    int selectedRowIndex = tabControl1.SelectedIndex == 0
-                        ? dataGridView1.CurrentCell.RowIndex
-                        : dataGridView2.CurrentCell.RowIndex;
-
-                    if (selectedRowIndex < 0)
-                    {
-                        MessageBox.Show("Por favor selecciona una fila para modificar.");
-                        return;
-                    }
-
-                    var dataGridView = tabControl1.SelectedIndex == 0 ? dataGridView1 : dataGridView2;
-                    int id = Convert.ToInt32(dataGridView.Rows[selectedRowIndex].Cells[0].Value);
-
-                    string query = $@"
-                UPDATE {tableName}
-                SET nombre = @nombre,
-                    apellido = @apellido,
-                    dni = @dni,
-                    telefono = @telefono,
-                    fecha_nac = @fecha_nac
-                WHERE {idColumn} = @id";
-
-                    DateTime fechaNac = dateTimePicker1.Value.Date;
-
-                    DateTime fechaLimite = DateTime.Today.AddYears(-5);
-                    if (fechaNac > fechaLimite)
-                    {
-                        MessageBox.Show("La fecha de nacimiento debe ser al menos de hace 5 años.", "Error de Validación", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
-                        command.Parameters.AddWithValue("@nombre", textBox1.Text);
-                        command.Parameters.AddWithValue("@apellido", textBox2.Text);
-                        command.Parameters.AddWithValue("@dni", textBox3.Text);
-                        command.Parameters.AddWithValue("@telefono", textBox4.Text);
-                        command.Parameters.AddWithValue("@fecha_nac", fechaNac);
-                        command.Parameters.AddWithValue("@id", id);
+                        // Parámetros SQL
+                        command.Parameters.AddWithValue("@Nombre", textBox1.Text);
+                        command.Parameters.AddWithValue("@Descripcion", textBox3.Text);
+                        command.Parameters.AddWithValue("@Precio", precio);
+                        command.Parameters.AddWithValue("@ArticuloID", articuloID);
 
+                        // Ejecutar la consulta
                         int rowsAffected = command.ExecuteNonQuery();
-                        MessageBox.Show(rowsAffected > 0
-                            ? "Modificado"
-                            : "No se pudo modificar el registro.");
-                    }
-                }
 
-                if (tabControl1.SelectedIndex == 0) 
-                {
-                    LoadData("Alumnos", dataGridView1);
-                }
-                else if (tabControl1.SelectedIndex == 1) 
-                {
-                    LoadData("Profesores", dataGridView2);
+                        if (rowsAffected > 0)
+                        {
+                            MessageBox.Show("Artículo modificado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            LoadData("Articulos", dataGridView1, 1); // Refrescar el DataGridView
+                        }
+                        else
+                        {
+                            MessageBox.Show("No se pudo modificar el artículo. Verifica el ID.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al modificar: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error al modificar el artículo: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void button3_Click(object sender, EventArgs e) //ELIMINAR !!!!!!!
         {
+            string connectionString = "Server=DESKTOP-2MVFTUI;Database=TiendaDB;Trusted_Connection=True;";
+
             try
             {
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
 
-                    string tableName, idColumn;
-                    if (tabControl1.SelectedIndex == 0)
+                    // Verificar si estamos en la pestaña correcta
+                    if (tabControl1.SelectedTab != tabPage1)
                     {
-                        tableName = "Alumnos";
-                        idColumn = "id_alumno";
-                    }
-                    else if (tabControl1.SelectedIndex == 1) 
-                    {
-                        tableName = "Profesores";
-                        idColumn = "id_profesor";
-                    }
-                    else
-                    {
-                        MessageBox.Show("Eliminación no válida en esta pestaña.");
+                        MessageBox.Show("Solo puedes modificar registros de la tabla 'Articulos'.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
 
-                    int selectedRowIndex = tabControl1.SelectedIndex == 0
-                        ? dataGridView1.CurrentCell.RowIndex
-                        : dataGridView2.CurrentCell.RowIndex;
-
-                    if (selectedRowIndex < 0)
+                    // Validar que haya una fila seleccionada en el DataGridView
+                    if (dataGridView1.CurrentRow == null || dataGridView1.CurrentRow.Index < 0)
                     {
-                        MessageBox.Show("Por favor selecciona una fila para eliminar.");
+                        MessageBox.Show("Por favor selecciona un artículo para modificar su visibilidad.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
 
-                    var dataGridView = tabControl1.SelectedIndex == 0 ? dataGridView1 : dataGridView2;
-                    int id = Convert.ToInt32(dataGridView.Rows[selectedRowIndex].Cells[0].Value);
+                    // Obtener el ID del artículo seleccionado (columna 'ArticuloID')
+                    int articuloID = Convert.ToInt32(dataGridView1.CurrentRow.Cells["ArticuloID"].Value);
+
+                    // Confirmar la acción
                     var confirmResult = MessageBox.Show(
-                        "¿Estás seguro que deseas eliminar este registro?",
-                        "Confirmar eliminación",
+                        "¿Estás seguro que deseas marcar este artículo como 'no visible'?",
+                        "Confirmar acción",
                         MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
                     if (confirmResult != DialogResult.Yes)
                         return;
-                    string query = $@"DELETE FROM {tableName} WHERE {idColumn} = @id";
 
+                    // Consulta SQL para actualizar la columna "Visible" a 0
+                    string query = "UPDATE Articulos SET Visible = 0 WHERE ArticuloID = @ArticuloID";
+
+                    // Ejecutar la consulta
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
-                        command.Parameters.AddWithValue("@id", id);
+                        command.Parameters.AddWithValue("@ArticuloID", articuloID);
                         int rowsAffected = command.ExecuteNonQuery();
 
                         MessageBox.Show(rowsAffected > 0
-                            ? "Registro eliminado exitosamente."
-                            : "No se pudo eliminar el registro.");
+                            ? "El artículo se ha marcado como 'no visible'."
+                            : "No se pudo modificar la visibilidad del artículo. Verifica el ID.",
+                            "Resultado", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
 
-                if (tabControl1.SelectedIndex == 0) 
+                // Refrescar el DataGridView después de la actualización
+                LoadData("Articulos", dataGridView1, 1);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al actualizar la visibilidad del artículo: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            string connectionString = "Server=DESKTOP-2MVFTUI;Database=TiendaDB;Trusted_Connection=True;";
+            try
+            {
+                if (dataGridView2.CurrentRow == null)
                 {
-                    LoadData("Alumnos", dataGridView1);
+                    MessageBox.Show("Por favor, selecciona un artículo para restaurar.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
                 }
-                else if (tabControl1.SelectedIndex == 1) 
+
+                // Obtener el ID del artículo seleccionado
+                int articuloID = Convert.ToInt32(dataGridView2.CurrentRow.Cells["ArticuloID"].Value);
+
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
-                    LoadData("Profesores", dataGridView2);
+                    connection.Open();
+
+                    // Actualizar la columna Visible a 1
+                    string query = @"UPDATE Articulos 
+                             SET Visible = 1 
+                             WHERE ArticuloID = @ArticuloID";
+
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@ArticuloID", articuloID);
+
+                        int rowsAffected = command.ExecuteNonQuery();
+                        if (rowsAffected > 0)
+                        {
+                            MessageBox.Show("Artículo restaurado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                            // Recargar los datos en DataGridView2
+                            LoadData("Articulos", dataGridView2, 0);
+
+                            // Opcional: Recargar también los datos visibles en DataGridView1
+                            LoadData("Articulos", dataGridView1, 1);
+                        }
+                        else
+                        {
+                            MessageBox.Show("No se pudo restaurar el artículo.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al eliminar: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error al restaurar el artículo: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        }
-
-        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
-        {
-
         }
     }
 }
