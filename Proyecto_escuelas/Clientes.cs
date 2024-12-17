@@ -4,28 +4,24 @@ using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
-using System.Globalization;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Proyecto_escuelas
 {
-    public partial class Principal : Form
+    public partial class Clientes : Form
     {
-        private string connectionString = "Server=DESKTOP-2MVFTUI;Database=TiendaDB;Trusted_Connection=True;";
-        public Principal()
+        public Clientes()
         {
             InitializeComponent();
             tabControl1.SelectedIndexChanged += TabControl1_SelectedIndexChanged;
             LoadData("Articulos", dataGridView1, 1);
             LoadData("Articulos", dataGridView2, 0);
         }
-
-
+        private string connectionString = "Server=DESKTOP-2MVFTUI;Database=TiendaDB;Trusted_Connection=True;";
+        
         private void TabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (tabControl1.SelectedIndex == 0) // Pestaña 1: Visible = 1

@@ -20,7 +20,7 @@ namespace Proyecto_escuelas
             }
         }
 
-        private string connectionString = "Server=DESKTOP-2MVFTUI;Database=tp_lab4;Trusted_Connection=True;";
+        private string connectionString = "Server=DESKTOP-2MVFTUI;Database=TiendaDb;Trusted_Connection=True;";
         public Inscripciones()
         {
             InitializeComponent();

@@ -42,7 +42,7 @@ namespace Proyecto_escuelas
         }
 
         int CalcularEdad(DateTime fechaNacimiento)
-        {     //////////////// CALCULAR EDAD MARQUINHOS
+        { 
             DateTime fechaActual = DateTime.Today;
             int edad = fechaActual.Year - fechaNacimiento.Year;
             return edad;
@@ -102,7 +102,7 @@ namespace Proyecto_escuelas
             
         }
 
-        private void button1_Click(object sender, EventArgs e)                         //LISTAR CON PROCEDIMIENTOS DE NICO ALMACENADOS EN LA BASE DE DATOS
+        private void button1_Click(object sender, EventArgs e)           
         {
             if (tabControl1.SelectedIndex == 0)
             {
