@@ -162,5 +162,14 @@
   <ItemGroup>
     <None Include="Resources\tacho.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Imagenes\restaurar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Imagenes\MOROSOS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Imagenes\receiptofcash_cash_money_4581.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

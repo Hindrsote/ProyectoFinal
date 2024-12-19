@@ -477,5 +477,10 @@ namespace Proyecto_escuelas
                 MessageBox.Show("Error al actualizar el estado del cliente: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -150,7 +150,7 @@ namespace Proyecto_escuelas
                     }
 
                     // Sumar el monto de la venta
-                    montoVentaTotal += precio * cantidad;
+                    montoVentaTotal += precio * cantidad; // * TABLA DE 7 INTERESES PERO CUANDO ELIJO CREDITO QUE ME DE LA OPCION DE LAS CUOTAS Y EL VALOR TOTAL 
 
                     // Añadir el nombre del artículo vendido a la lista
                     string articuloNombre = row.Cells["Nombre"].Value.ToString();

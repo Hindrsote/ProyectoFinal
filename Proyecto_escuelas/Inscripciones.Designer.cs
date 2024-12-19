@@ -53,12 +53,12 @@
             // 
             // button1
             // 
-            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.89565F);
-            this.button1.Location = new System.Drawing.Point(992, 43);
-            this.button1.Margin = new System.Windows.Forms.Padding(2);
+            this.button1.BackColor = System.Drawing.Color.MediumSeaGreen;
+            this.button1.Font = new System.Drawing.Font("Perpetua", 20.03478F, System.Drawing.FontStyle.Bold);
+            this.button1.Location = new System.Drawing.Point(1513, 46);
+            this.button1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(176, 45);
+            this.button1.Size = new System.Drawing.Size(290, 109);
             this.button1.TabIndex = 3;
             this.button1.Text = "Añadir Articulos";
             this.button1.UseVisualStyleBackColor = false;
@@ -66,21 +66,21 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(101, 330);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(2);
+            this.textBox1.Location = new System.Drawing.Point(135, 406);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(134, 20);
+            this.textBox1.Size = new System.Drawing.Size(177, 22);
             this.textBox1.TabIndex = 4;
             // 
             // button2
             // 
             this.button2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
-            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.89565F);
+            this.button2.Font = new System.Drawing.Font("Perpetua", 20.03478F, System.Drawing.FontStyle.Bold);
             this.button2.ForeColor = System.Drawing.Color.Black;
-            this.button2.Location = new System.Drawing.Point(1135, 291);
-            this.button2.Margin = new System.Windows.Forms.Padding(2);
+            this.button2.Location = new System.Drawing.Point(1513, 275);
+            this.button2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(214, 45);
+            this.button2.Size = new System.Drawing.Size(290, 109);
             this.button2.TabIndex = 5;
             this.button2.Text = "Venta";
             this.button2.UseVisualStyleBackColor = false;
@@ -91,21 +91,21 @@
             this.tabControl2.Appearance = System.Windows.Forms.TabAppearance.Buttons;
             this.tabControl2.Controls.Add(this.tabPage6);
             this.tabControl2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.89565F);
-            this.tabControl2.Location = new System.Drawing.Point(25, 354);
-            this.tabControl2.Margin = new System.Windows.Forms.Padding(2);
+            this.tabControl2.Location = new System.Drawing.Point(33, 436);
+            this.tabControl2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabControl2.Name = "tabControl2";
             this.tabControl2.SelectedIndex = 0;
-            this.tabControl2.Size = new System.Drawing.Size(878, 342);
+            this.tabControl2.Size = new System.Drawing.Size(1171, 421);
             this.tabControl2.TabIndex = 7;
             // 
             // tabPage6
             // 
             this.tabPage6.Controls.Add(this.dataGridView6);
-            this.tabPage6.Location = new System.Drawing.Point(4, 32);
-            this.tabPage6.Margin = new System.Windows.Forms.Padding(2);
+            this.tabPage6.Location = new System.Drawing.Point(4, 36);
+            this.tabPage6.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabPage6.Name = "tabPage6";
-            this.tabPage6.Padding = new System.Windows.Forms.Padding(2);
-            this.tabPage6.Size = new System.Drawing.Size(870, 306);
+            this.tabPage6.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tabPage6.Size = new System.Drawing.Size(1163, 381);
             this.tabPage6.TabIndex = 2;
             this.tabPage6.Text = "Cliente";
             this.tabPage6.UseVisualStyleBackColor = true;
@@ -119,21 +119,23 @@
             this.dataGridView6.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllHeaders;
             this.dataGridView6.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView6.Location = new System.Drawing.Point(-1, 0);
+            this.dataGridView6.Margin = new System.Windows.Forms.Padding(4);
             this.dataGridView6.Name = "dataGridView6";
             this.dataGridView6.ReadOnly = true;
             this.dataGridView6.RowHeadersWidth = 49;
-            this.dataGridView6.Size = new System.Drawing.Size(872, 309);
+            this.dataGridView6.Size = new System.Drawing.Size(1163, 380);
             this.dataGridView6.TabIndex = 14;
             this.dataGridView6.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView6_CellContentClick);
             // 
             // button3
             // 
             this.button3.BackColor = System.Drawing.Color.LightGray;
-            this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.89565F);
-            this.button3.Location = new System.Drawing.Point(651, 291);
-            this.button3.Margin = new System.Windows.Forms.Padding(2);
+            this.button3.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.button3.Font = new System.Drawing.Font("Perpetua", 20.03478F, System.Drawing.FontStyle.Bold);
+            this.button3.Location = new System.Drawing.Point(940, 365);
+            this.button3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(176, 45);
+            this.button3.Size = new System.Drawing.Size(260, 67);
             this.button3.TabIndex = 8;
             this.button3.Text = "Buscar Cliente";
             this.button3.UseVisualStyleBackColor = false;
@@ -142,12 +144,12 @@
             // button4
             // 
             this.button4.BackColor = System.Drawing.Color.Red;
-            this.button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.89565F);
+            this.button4.Font = new System.Drawing.Font("Perpetua", 20.03478F, System.Drawing.FontStyle.Bold);
             this.button4.ForeColor = System.Drawing.Color.Black;
-            this.button4.Location = new System.Drawing.Point(1011, 541);
-            this.button4.Margin = new System.Windows.Forms.Padding(2);
+            this.button4.Location = new System.Drawing.Point(1513, 695);
+            this.button4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(214, 45);
+            this.button4.Size = new System.Drawing.Size(304, 109);
             this.button4.TabIndex = 9;
             this.button4.Text = "Eliminar Inscripcion";
             this.button4.UseVisualStyleBackColor = false;
@@ -156,10 +158,11 @@
             // Inicio
             // 
             this.Inicio.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.Inicio.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.77391F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Inicio.Location = new System.Drawing.Point(25, 701);
+            this.Inicio.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.03478F, System.Drawing.FontStyle.Bold);
+            this.Inicio.Location = new System.Drawing.Point(36, 863);
+            this.Inicio.Margin = new System.Windows.Forms.Padding(4);
             this.Inicio.Name = "Inicio";
-            this.Inicio.Size = new System.Drawing.Size(142, 74);
+            this.Inicio.Size = new System.Drawing.Size(236, 106);
             this.Inicio.TabIndex = 10;
             this.Inicio.Text = "Inicio";
             this.Inicio.UseVisualStyleBackColor = false;
@@ -169,9 +172,10 @@
             // 
             this.tabPage1.BackColor = System.Drawing.SystemColors.ActiveBorder;
             this.tabPage1.Controls.Add(this.dataGridView1);
-            this.tabPage1.Location = new System.Drawing.Point(4, 32);
+            this.tabPage1.Location = new System.Drawing.Point(4, 36);
+            this.tabPage1.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Size = new System.Drawing.Size(852, 240);
+            this.tabPage1.Size = new System.Drawing.Size(1139, 300);
             this.tabPage1.TabIndex = 5;
             this.tabPage1.Text = "Articulos a Vender";
             this.tabPage1.Click += new System.EventHandler(this.tabPage1_Click);
@@ -185,11 +189,12 @@
             this.dataGridView1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllHeaders;
             this.dataGridView1.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(-3, -3);
+            this.dataGridView1.Location = new System.Drawing.Point(-4, -4);
+            this.dataGridView1.Margin = new System.Windows.Forms.Padding(4);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowHeadersWidth = 49;
-            this.dataGridView1.Size = new System.Drawing.Size(855, 243);
+            this.dataGridView1.Size = new System.Drawing.Size(1139, 300);
             this.dataGridView1.TabIndex = 0;
             // 
             // tabControl1
@@ -197,18 +202,20 @@
             this.tabControl1.Appearance = System.Windows.Forms.TabAppearance.Buttons;
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.89565F);
-            this.tabControl1.Location = new System.Drawing.Point(28, 11);
-            this.tabControl1.Margin = new System.Windows.Forms.Padding(2);
+            this.tabControl1.Location = new System.Drawing.Point(37, 14);
+            this.tabControl1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(860, 276);
+            this.tabControl1.Size = new System.Drawing.Size(1147, 340);
             this.tabControl1.TabIndex = 2;
             // 
             // menuStrip1
             // 
+            this.menuStrip1.ImageScalingSize = new System.Drawing.Size(19, 19);
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1372, 24);
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(8, 2, 0, 2);
+            this.menuStrip1.Size = new System.Drawing.Size(1829, 24);
             this.menuStrip1.TabIndex = 11;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -218,29 +225,41 @@
             this.comboBox1.Items.AddRange(new object[] {
             "Efectivo",
             "Transferencia",
-            "Tarjeta de credito",
             "Tarjeta de debito",
-            "Credito Personal"});
-            this.comboBox1.Location = new System.Drawing.Point(914, 315);
+            "Tarjeta de credito 1 cuotas ",
+            "Tarjeta de credito 3 cuotas ",
+            "Tarjeta de credito 6 cuotas ",
+            "Tarjeta de credito 9 cuotas ",
+            "Tarjeta de credito 12 cuotas ",
+            "Credito Personal 1 cuota ",
+            "Credito Personal 3 cuota ",
+            "Credito Personal 6 cuota ",
+            "Credito Personal 9 cuota ",
+            "Credito Personal 12 cuota "});
+            this.comboBox1.Location = new System.Drawing.Point(1529, 447);
+            this.comboBox1.Margin = new System.Windows.Forms.Padding(4);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(198, 21);
+            this.comboBox1.Size = new System.Drawing.Size(263, 24);
             this.comboBox1.TabIndex = 12;
             this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(964, 299);
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.03478F, System.Drawing.FontStyle.Bold);
+            this.label1.Location = new System.Drawing.Point(1535, 406);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(78, 13);
+            this.label1.Size = new System.Drawing.Size(241, 37);
             this.label1.TabIndex = 13;
             this.label1.Text = "Medio de pago";
             // 
             // Inscripciones
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1372, 798);
+            this.BackColor = System.Drawing.Color.LightSlateGray;
+            this.ClientSize = new System.Drawing.Size(1829, 982);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.Inicio);
@@ -252,7 +271,7 @@
             this.Controls.Add(this.button1);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.menuStrip1);
-            this.Margin = new System.Windows.Forms.Padding(2);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "Inscripciones";
             this.Text = "Ventas";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
